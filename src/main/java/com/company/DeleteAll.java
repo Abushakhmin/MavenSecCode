@@ -11,15 +11,15 @@ class DeleteAll {
         Path del = Paths.get(arg1);
         File put1 = new File(arg1);
 
-        if (put1.isDirectory()){
+        if (put1.isDirectory()){ // Проверяем что хотим удалить, директорию или файл
 
-            String [] files = put1.list();
+            String [] files = put1.list(); // Набираем массив из файлов доступных в данной директории
 
-            if((null == files) || (files.length == 0)) {
+            if((null == files) || (files.length == 0)) { // Если файлов нет, то удаляем директорию
                 put1.delete();
             }
 
-            else {
+            else { // Если файлов нет то применяем рекурсивное удалние
                 for (final String filename : files) {
 
                     onDeleteAll(new File(put1.getAbsolutePath() + File.separator + filename).toString());
@@ -39,8 +39,6 @@ class DeleteAll {
                 // File permission problems are caught here.
                 System.err.println(x);
             }
-
         }
-
     }
 }

@@ -13,33 +13,33 @@ class CopyAll {
         File put1 = new File(arg1);
         File put2 = new File(arg2);
 
-        if (put1.isDirectory()) {
-            if (!put2.exists()) {
+        if (put1.isDirectory()) {  // Это директория или файл
+            if (!put2.exists()) {  // Если такой нет то создадим ее
                 put2.mkdir();
 
-                String[] listOfFiles = put1.list();
+                String[] listOfFiles = put1.list(); // Наполним массив файлами
 
-                for (int i = 0; i < listOfFiles.length; i++) {
+                for (int i = 0; i < listOfFiles.length; i++) { // Рекурсивно копируем файлы
 
                     onCopyAll(new File(put1, listOfFiles[i]).toString(), new File(put2, listOfFiles[i]).toString());
                 }
             }
             else
-            {
+            { // Директория уже существует, применяем потоки
                 InputStream in = new FileInputStream(put1);
                 OutputStream out = new FileOutputStream(put2);
 
-            byte[] buf = new byte[1024];
-            int len;
+                byte[] buf = new byte[1024];
+                int len;
 
-            while ((len = in.read(buf)) > 0) {
+                while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
-            }
+                }
 
-            in.close();
-            out.close();
-        }
-    } else if (put1.exists()) // Если файл существует
+                in.close();
+                out.close();
+            }
+        } else if (put1.exists()) // Если файл существует
         {
             if (put1.canRead()) // Если есть доступ к файлу
             {
